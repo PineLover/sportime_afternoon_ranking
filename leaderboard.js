@@ -1,6 +1,6 @@
 // 토너먼트 데이터
 const tournament1Data = [
-    { team: '팀1', players: ['이돈휴', '이영준'], record: '4승 0패', rank: 1, score: 8 },
+    { team: '팀1', players: ['이돈휴', '김영준'], record: '4승 0패', rank: 1, score: 8 },
     { team: '팀2', players: ['강규호', '박예나'], record: '1승 3패', rank: 4, score: 5 },
     { team: '팀3', players: ['김영재', '장문주'], record: '1승 3패', rank: 5, score: 5 },
     { team: '팀4', players: ['박지민', '송경진'], record: '2승 2패', rank: 3, score: 6 },
