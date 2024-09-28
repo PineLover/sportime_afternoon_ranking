@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>양재 스포타임 라켓볼 동호인 대회 리더보드</title>
+    <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 20px;
+                background-color: #f4f4f4;
+            }
+            h1, h2 {
+                color: #333;
+                text-align: center;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+                background-color: white;
+            }
+            th, td {
+                border: 1px solid #ddd;
+                padding: 12px;
+                text-align: left;
+            }
+            th {
+                background-color: #4CAF50;
+                color: white;
+                font-weight: bold;
+            }
+            tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            tr:hover {
+                background-color: #f5f5f5;
+            }
+            .tournament {
+                margin-bottom: 30px;
+                background-color: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+            #totalRanking {
+                font-size: 1.1em;
+            }
+            #totalRanking th {
+                background-color: #3f51b5;
+            }
+            @keyframes shine {
+                0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+                50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+                100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+            }
+            .rank-1 {
+                background-color: #FFD700 !important;
+                color: #000000;
+                font-weight: bold;
+                animation: shine 2s infinite;
+            }
+            .rank-2 {
+                background-color: #E6E8FA !important;
+                color: #000000;
+                font-weight: bold;
+                animation: shine 2.5s infinite;
+            }
+            .rank-3 {
+                background-color: #FFA07A !important;
+                color: #000000;
+                font-weight: bold;
+                animation: shine 3s infinite;
+            }
+            .rank-1, .rank-2, .rank-3 {
+                transition: all 0.3s ease;
+            }
+            .rank-1:hover, .rank-2:hover, .rank-3:hover {
+                transform: scale(1.05);
+            }
+            #fireworks-canvas {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+            }
+    </style>
+</head>
+<body>
+    <canvas id="fireworks-canvas"></canvas>
+    <h1>복식 대회 리더보드</h1>
+    
+    <div class="tournament">
+        <h2>누적 순위</h2>
+        <table id="totalRanking">
+            <tr>
+                <th>순위</th>
+                <th>선수</th>
+                <th>총점</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tournament">
+        <h2>2024년 8월 30일 대회 결과</h2>
+        <table id="tournament1">
+            <tr>
+                <th>팀</th>
+                <th>선수</th>
+                <th>승패</th>
+                <th>순위</th>
+                <th>점수</th>
+            </tr>
+        </table>
+    </div>
+
+    <div class="tournament">
+        <h2>2024년 9월 20일 대회 결과</h2>
+        <table id="tournament2">
+            <tr>
+                <th>팀</th>
+                <th>선수</th>
+                <th>승패</th>
+                <th>순위</th>
+                <th>점수</th>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        // 기존 토너먼트 데이터 및 테이블 채우기 함수
+        const tournament1Data = [
+            { team: '팀1', players: ['이돈휴', '이영준'], record: '4승 0패', rank: 1, score: 8 },
+            { team: '팀2', players: ['강규호', '박예나'], record: '1승 3패', rank: 4, score: 5 },
+            { team: '팀3', players: ['김영재', '장문주'], record: '1승 3패', rank: 5, score: 5 },
+            { team: '팀4', players: ['박지민', '송경진'], record: '2승 2패', rank: 3, score: 6 },
+            { team: '팀5', players: ['이광복', '문대성'], record: '2승 2패', rank: 2, score: 7 }
+        ];
+
+        const tournament2Data = [
+            { team: '팀1', players: ['이돈휴', '박지민'], record: '2승 2패', rank: 3, score: 6 },
+            { team: '팀2', players: ['장호승', '김영재'], record: '4승', rank: 1, score: 8 },
+            { team: '팀3', players: ['김동환', '김희진'], record: '3승 1패', rank: 2, score: 7 },
+            { team: '팀4', players: ['장문주', '강규호'], record: '4패', rank: 5, score: 5 },
+            { team: '팀5', players: ['김은병', '백윤서'], record: '1승 3패', rank: 4, score: 5 }
+        ];
+
+        function populateTable(tableId, data) {
+            const table = document.getElementById(tableId);
+            data.forEach(item => {
+                item.players.forEach(player => {
+                    const row = table.insertRow();
+                    row.insertCell(0).textContent = item.team;
+                    row.insertCell(1).textContent = player;
+                    row.insertCell(2).textContent = item.record;
+                    row.insertCell(3).textContent = item.rank;
+                    row.insertCell(4).textContent = item.score;
+                });
+            });
+        }
+
+        function calculateTotalRanking() {
+            const playerScores = {};
+            
+            function addScores(data) {
+                data.forEach(item => {
+                    item.players.forEach(player => {
+                        if (!playerScores[player]) {
+                            playerScores[player] = 0;
+                        }
+                        playerScores[player] += item.score;
+                    });
+                });
+            }
+
+            addScores(tournament1Data);
+            addScores(tournament2Data);
+
+            const sortedPlayers = Object.entries(playerScores)
+                .sort((a, b) => b[1] - a[1])
+                .map(([name, score], index) => ({ rank: index + 1, name, score }));
+
+            const table = document.getElementById('totalRanking');
+            sortedPlayers.forEach(player => {
+                const row = table.insertRow();
+                row.insertCell(0).textContent = player.rank;
+                row.insertCell(1).textContent = player.name;
+                row.insertCell(2).textContent = player.score;
+                if (player.rank <= 3) {
+                    row.classList.add(`rank-${player.rank}`);
+                }
+            });
+        }
+
+        calculateTotalRanking();
+        populateTable('tournament1', tournament1Data);
+        populateTable('tournament2', tournament2Data);
+
+        // 폭죽 효과 코드
+        const canvas = document.getElementById('fireworks-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.radius = Math.random() * 2 + 1;
+                this.dx = (Math.random() - 0.5) * 8;
+                this.dy = (Math.random() - 0.5) * 8;
+                this.alpha = 1;
+                this.color = `hsl(${Math.random() * 360}, 50%, 50%)`;
+            }
+
+            draw() {
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                this.x += this.dx;
+                this.y += this.dy;
+                this.alpha -= 0.02;
+                this.draw();
+            }
+        }
+
+        function createFirework(x, y) {
+            const particleCount = 100;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new Particle(x, y));
+            }
+        }
+
+        let particles = [];
+
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            particles.forEach((particle, index) => {
+                if (particle.alpha > 0) {
+                    particle.update();
+                } else {
+                    particles.splice(index, 1);
+                }
+            });
+        }
+
+        function launchFireworks() {
+            const fireworkCount = 5;
+            for (let i = 0; i < fireworkCount; i++) {
+                setTimeout(() => {
+                    createFirework(Math.random() * canvas.width, Math.random() * canvas.height);
+                }, i * 200);
+            }
+        }
+
+        animate();
+        launchFireworks();
+
+        // 10초 동안 주기적으로 폭죽 발사
+        let fireworkInterval = setInterval(launchFireworks, 2000);
+
+        // 10초 후에 폭죽 효과 중지 및 캔버스 제거
+        setTimeout(() => {
+            clearInterval(fireworkInterval);
+            canvas.remove();
+        }, 10000);
+    </script>
+</body>
+</html>
