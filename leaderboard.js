@@ -51,13 +51,18 @@ function calculateTotalRanking() {
         .map(([name, score], index) => ({ rank: index + 1, name, score }));
 
     const table = document.getElementById('totalRanking');
-    sortedPlayers.forEach(player => {
+    // 테이블의 기존 행들을 제거 (헤더 제외)
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+
+    sortedPlayers.forEach((player, index) => {
         const row = table.insertRow();
-        row.insertCell(0).textContent = `${player.rank}순위`;
+        row.insertCell(0).textContent = `${sortedPlayers.length - index}순위`;
         row.insertCell(1).textContent = player.name;
         row.insertCell(2).textContent = `${player.score}점`;
-        if (player.rank <= 3) {
-            row.classList.add(`rank-${player.rank}`);
+        if (sortedPlayers.length - index <= 3) {
+            row.classList.add(`rank-${sortedPlayers.length - index}`);
         }
     });
 }
