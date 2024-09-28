@@ -17,7 +17,16 @@ const tournament2Data = [
 
 function populateTable(tableId, data) {
     const table = document.getElementById(tableId);
-    data.forEach(item => {
+    
+    // 기존 테이블 내용 삭제 (헤더 제외)
+    while (table.rows.length > 1) {
+        table.deleteRow(1);
+    }
+
+    // rank를 기준으로 오름차순 정렬
+    const sortedData = data.sort((a, b) => a.rank - b.rank);
+
+    sortedData.forEach(item => {
         item.players.forEach(player => {
             const row = table.insertRow();
             row.insertCell(0).textContent = item.team;
@@ -51,18 +60,13 @@ function calculateTotalRanking() {
         .map(([name, score], index) => ({ rank: index + 1, name, score }));
 
     const table = document.getElementById('totalRanking');
-    // 테이블의 기존 행들을 제거 (헤더 제외)
-    while (table.rows.length > 1) {
-        table.deleteRow(1);
-    }
-
-    sortedPlayers.forEach((player, index) => {
+    sortedPlayers.forEach(player => {
         const row = table.insertRow();
-        row.insertCell(0).textContent = `${sortedPlayers.length - index}순위`;
+        row.insertCell(0).textContent = `${player.rank}순위`;
         row.insertCell(1).textContent = player.name;
         row.insertCell(2).textContent = `${player.score}점`;
-        if (sortedPlayers.length - index <= 3) {
-            row.classList.add(`rank-${sortedPlayers.length - index}`);
+        if (player.rank <= 3) {
+            row.classList.add(`rank-${player.rank}`);
         }
     });
 }
