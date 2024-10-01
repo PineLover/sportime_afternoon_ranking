@@ -4,7 +4,8 @@ const tournament1Data = [
     { team: '팀2', players: ['강규호', '박예나'], record: '1승 3패', rank: 4, score: 5 },
     { team: '팀3', players: ['김영재', '장문주'], record: '1승 3패', rank: 5, score: 5 },
     { team: '팀4', players: ['박지민', '송경진'], record: '2승 2패', rank: 3, score: 6 },
-    { team: '팀5', players: ['이광복', '문대성'], record: '2승 2패', rank: 2, score: 7 }
+    { team: '팀5', players: ['이광복', '문대성'], record: '2승 2패', rank: 2, score: 7 },
+    { team: '팀6', players: ['장호승'], record: '부상, 심판', rank: 6, score: 5 },
 ];
 
 const tournament2Data = [
