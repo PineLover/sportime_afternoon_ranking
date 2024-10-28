@@ -152,7 +152,7 @@ function init() {
     calculateTotalRanking();
     populateTable('tournament1', tournament1Data);
     populateTable('tournament2', tournament2Data);
-    populateTable('tournament2', tournament3Data);
+    populateTable('tournament3', tournament3Data);
 
     animate();
     launchFireworks();
