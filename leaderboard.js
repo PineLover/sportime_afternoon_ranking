@@ -26,8 +26,8 @@ const tournament3Data = [
 ];
 
 const tournament4Data = [
-    { team: '팀2', players: ['장호승', '장문주', '김동환', '박지민', '김영준'], record: '6승 4패', rank: 1, score: 5 },
-    { team: '팀1', players: ['김영재', '강규호', '김은병', '김희진', '이돈휴'], record: '4승 6패', rank: 2, score: 0 },
+    { team: '팀2', players: ['장호승', '장문주', '김동환', '박지민', '김영준'], record: '6승 4패', rank: 1, score: 8 },
+    { team: '팀1', players: ['김영재', '강규호', '김은병', '김희진', '이돈휴'], record: '4승 6패', rank: 2, score: 3 },
 ];
 
 function populateTable(tableId, data) {
