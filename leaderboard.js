@@ -25,6 +25,11 @@ const tournament3Data = [
     { team: '팀6', players: ['김영재'], record: '선입금', rank: 6, score: 1 },
 ];
 
+const tournament4Data = [
+    { team: '팀2', players: ['장호승', '김영재', '김동환', '박지민', '김영준'], record: '6승 4패', rank: 1, score: 5 },
+    { team: '팀1', players: ['김영재', '강규호', '김은병', '김희진', '이돈휴'], record: '4승 6패', rank: 2, score: 0 },
+];
+
 function populateTable(tableId, data) {
     const table = document.getElementById(tableId);
     
@@ -65,6 +70,7 @@ function calculateTotalRanking() {
     addScores(tournament1Data);
     addScores(tournament2Data);
     addScores(tournament3Data);
+    addScores(tournament4Data);
 
     const sortedPlayers = Object.entries(playerScores)
         .sort((a, b) => b[1] - a[1])
@@ -153,6 +159,7 @@ function init() {
     populateTable('tournament1', tournament1Data);
     populateTable('tournament2', tournament2Data);
     populateTable('tournament3', tournament3Data);
+    populateTable('tournament4', tournament4Data);
 
     animate();
     launchFireworks();
