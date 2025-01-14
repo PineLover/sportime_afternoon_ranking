@@ -32,7 +32,7 @@ const tournament4Data = [
 
 const tournament5Data = [
     { team: '팀1', players: ['김희진', '장호승'], record: '3승 0패', rank: 1, score: 8 },
-    { team: '팀2', players: ['김동환', '문대성'], record: '2승 1패', rank: 2, score: 7 },
+    { team: '팀2', players: ['김동환', '박지민'], record: '2승 1패', rank: 2, score: 7 },
     { team: '팀3', players: ['이돈휴', '김영재'], record: '0승 3패', rank: 5, score: 5 },
     { team: '팀4', players: ['김은병', '박에나'], record: '2승 2패', rank: 3, score: 6 },
     { team: '팀5', players: ['장문주', '김영준'], record: '1승 2패', rank: 4, score: 5 },
