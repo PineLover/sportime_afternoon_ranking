@@ -107,70 +107,6 @@ function calculateTotalRanking() {
     });
 }
 
-// 폭죽 효과 코드
-const canvas = document.getElementById('fireworks-canvas');
-const ctx = canvas.getContext('2d');
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-class Particle {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-        this.radius = Math.random() * 2 + 1;
-        this.dx = (Math.random() - 0.5) * 8;
-        this.dy = (Math.random() - 0.5) * 8;
-        this.alpha = 1;
-        this.color = `hsl(${Math.random() * 360}, 50%, 50%)`;
-    }
-
-    draw() {
-        ctx.globalAlpha = this.alpha;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }
-
-    update() {
-        this.x += this.dx;
-        this.y += this.dy;
-        this.alpha -= 0.02;
-        this.draw();
-    }
-}
-
-function createFirework(x, y) {
-    const particleCount = 100;
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle(x, y));
-    }
-}
-
-let particles = [];
-
-function animate() {
-    requestAnimationFrame(animate);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach((particle, index) => {
-        if (particle.alpha > 0) {
-            particle.update();
-        } else {
-            particles.splice(index, 1);
-        }
-    });
-}
-
-function launchFireworks() {
-    const fireworkCount = 5;
-    for (let i = 0; i < fireworkCount; i++) {
-        setTimeout(() => {
-            createFirework(Math.random() * canvas.width, Math.random() * canvas.height);
-        }, i * 200);
-    }
-}
 
 // 초기화 및 실행
 function init() {
@@ -180,18 +116,6 @@ function init() {
     populateTable('tournament3', tournament3Data);
     populateTable('tournament4', tournament4Data);
     populateTable('tournament5', tournament5Data);
-
-    animate();
-    launchFireworks();
-
-    // 10초 동안 주기적으로 폭죽 발사
-    let fireworkInterval = setInterval(launchFireworks, 2000);
-
-    // 10초 후에 폭죽 효과 중지 및 캔버스 제거
-    setTimeout(() => {
-        clearInterval(fireworkInterval);
-        canvas.remove();
-    }, 10000);
 }
 
 // 페이지 로드 시 초기화 함수 실행
