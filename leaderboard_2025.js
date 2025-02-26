@@ -51,9 +51,9 @@ function calculateTotalRanking() {
     function addScores(data) {
         data.forEach(item => {
             item.players.forEach(player => {
-                if (!playerScores[player]) {
-                    playerScores[player] = 0;
-                }
+                // if (!playerScores[player]) {
+                //     playerScores[player] = 0;
+                // }
                 playerScores[player] += item.score;
                 playerScores[player] += 9; // 기본점수
             });
