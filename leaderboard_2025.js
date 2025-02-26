@@ -8,6 +8,15 @@ const tournament1Data = [
     { team: '참가점수', players: ['장문주', '장호승'], record: '참가점수', rank: 6, score: 5 },
 ];
 
+const tournament2Data = [
+    { team: '팀1', players: ['문대성', '박성윤'], record: '0승 4패', rank: 5, score: 6 },
+    { team: '팀2', players: ['장문주', '김희진'], record: '2승 2패', rank: 2, score: 9 },
+    { team: '팀3', players: ['박성찬', '김영재'], record: '2승 2패', rank: 3, score: 8 },
+    { team: '팀4', players: ['김영준', '이돈휴', '김동환'], record: '4승 0패', rank: 1, score: 10 },
+    { team: '팀5', players: ['백윤서', '김은병'], record: '2승 2패', rank: 4, score: 7 },
+    { team: '참가점수', players: ['장호승'], record: '참가점수', rank: 6, score: 5 },
+];
+
 
 function populateTable(tableId, data) {
     const table = document.getElementById(tableId);
@@ -51,6 +60,7 @@ function calculateTotalRanking() {
     }
 
     addScores(tournament1Data);
+    addScores(tournament2Data);
 
     const sortedPlayers = Object.entries(playerScores)
         .sort((a, b) => b[1] - a[1])
@@ -79,6 +89,7 @@ function calculateTotalRanking() {
 function init() {
     calculateTotalRanking();
     populateTable('tournament1', tournament1Data);
+    populateTable('tournament2', tournament2Data);
 }
 
 // 페이지 로드 시 초기화 함수 실행
