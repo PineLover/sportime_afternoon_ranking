@@ -73,6 +73,7 @@ function calculateTotalRanking() {
     addScores(tournament1Data);
     addScores(tournament2Data);
     addScores(tournament3Data);
+    addScores(tournament4Data);
 
     const sortedPlayers = Object.entries(playerScores)
         .sort((a, b) => b[1] - a[1])
