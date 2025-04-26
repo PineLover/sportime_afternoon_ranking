@@ -22,6 +22,11 @@ const tournament3Data = [
     { team: '팀2', players: ['김은병', '백윤서', '장문주'], record: '패', rank: 2, score: 6 }
 ];
 
+const tournament4Data = [
+    { team: '팀1', players: ['김동환', '장호승', '장문주', '이돈휴'], record: '승', rank: 1, score: 10 },
+    { team: '팀2', players: ['김은병', '서우경', '안두수', '고종환'], record: '패', rank: 2, score: 6 }
+];
+
 
 function populateTable(tableId, data) {
     const table = document.getElementById(tableId);
@@ -98,6 +103,7 @@ function init() {
     populateTable('tournament1', tournament1Data);
     populateTable('tournament2', tournament2Data);
     populateTable('tournament3', tournament3Data);
+    populateTable('tournament4', tournament4Data);
 }
 
 // 페이지 로드 시 초기화 함수 실행
