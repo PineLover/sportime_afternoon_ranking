@@ -27,6 +27,13 @@ const tournament4Data = [
     { team: '팀2', players: ['김은병', '서우경', '안두수', '고종환'], record: '패', rank: 2, score: 6 }
 ];
 
+const tournament5Data = [
+    { team: '팀1', players: ['장호승', '최재용'], record: '1승 3패', rank: 3, score: 8 },
+    { team: '팀2', players: ['김영준', '이돈휴'], record: '4승 0패', rank: 1, score: 10 },
+    { team: '팀3', players: ['김동환', '장문주'], record: '1승 3패', rank: 3, score: 8 },
+    { team: '팀4', players: ['오재빈', '최규진'], record: '3승 1패', rank: 2, score: 9 },
+    { team: '팀5', players: ['김영재', '김희진'], record: '1승 3패', rank: 3, score: 8 },
+];
 
 function populateTable(tableId, data) {
     const table = document.getElementById(tableId);
@@ -74,6 +81,7 @@ function calculateTotalRanking() {
     addScores(tournament2Data);
     addScores(tournament3Data);
     addScores(tournament4Data);
+    addScores(tournament5Data);
 
     const sortedPlayers = Object.entries(playerScores)
         .sort((a, b) => b[1] - a[1])
@@ -105,6 +113,7 @@ function init() {
     populateTable('tournament2', tournament2Data);
     populateTable('tournament3', tournament3Data);
     populateTable('tournament4', tournament4Data);
+    populateTable('tournament5', tournament5Data);
 }
 
 // 페이지 로드 시 초기화 함수 실행
